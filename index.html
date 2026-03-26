@@ -143,7 +143,7 @@ header p{color:var(--text-dim);margin-top:.3rem;font-size:.88rem}
 <div class="container">
 <header>
   <h1>Study Command Center</h1>
-  <p>Mar 26 – Apr 20, 2026 · Microbiology · Pharmacology · Pathology</p>
+  <p>Mar 26 – Apr 20, 2026 · Microbiology · Pharmacology · Pathology · Starting today (4h)</p>
 </header>
 <div class="tabs">
   <button class="tab-btn active-dash" data-tab="dashboard" id="tabDash">◉ Dashboard</button>
@@ -237,13 +237,17 @@ const pathoCh=[
 ];
 
 // ===== DATES =====
-const HOLIDAYS=new Set(['2026-03-26','2026-03-27','2026-03-28','2026-04-02','2026-04-03','2026-04-04','2026-04-13','2026-04-14','2026-04-15']);
+const HOLIDAYS=new Set(['2026-03-27','2026-03-28','2026-04-02','2026-04-03','2026-04-04','2026-04-13','2026-04-14','2026-04-15']);
 function dk(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function buildDates(){
   const dates=[];let d=new Date(2026,2,26);const end=new Date(2026,3,20);
+  const todayKey='2026-03-26';
   while(d<=end){
-    const dow=d.getDay(),isH=HOLIDAYS.has(dk(d)),isS=dow===0,is8=isH||isS;
-    dates.push({date:new Date(d),isH,isS,is8,dayType:isH&&isS?'holiday+sunday':isH?'holiday':isS?'sunday':'weekday'});
+    const dow=d.getDay(),key=dk(d),isH=HOLIDAYS.has(key),isS=dow===0;
+    const isToday=key===todayKey;
+    const is8=!isToday&&(isH||isS);
+    let dayType=isToday?'today (4h)':isH&&isS?'holiday+sunday':isH?'holiday':isS?'sunday':'weekday';
+    dates.push({date:new Date(d),isH:isToday?false:isH,isS,is8,isToday,dayType});
     d.setDate(d.getDate()+1);
   }
   return dates;
@@ -266,7 +270,8 @@ function buildMasterSchedule(){
   // Primary: Micro + Pharma get 2h each on weekdays, 4h each on holidays
   // Patho: 2h bonus on holidays/sundays only (initially)
   days.forEach(d=>{
-    if(d.is8){d.micro.budget=4;d.pharma.budget=4;d.patho.budget=2;}
+    if(d.isToday){d.micro.budget=2;d.pharma.budget=2;d.patho.budget=0;}
+    else if(d.is8){d.micro.budget=4;d.pharma.budget=4;d.patho.budget=2;}
     else{d.micro.budget=2;d.pharma.budget=2;d.patho.budget=0;}
   });
 
@@ -551,7 +556,7 @@ function renderDash(){
       }).join('')}
     </div>
     <div class="footer-note">
-      <strong>Schedule logic:</strong> Micro + Pharma are paired on all days (2h each weekday, 4h each holiday). Pathology gets 2h bonus slots on holidays/Sundays. Once Pharma chapters finish, Patho takes over Pharma's slot for remaining days. Max 2 main subjects per weekday; holidays allow the 3rd subject as a bonus block. Click any day in the daily load chart for full details.
+      <strong>Schedule logic:</strong> Today (Mar 26) = 4h only (2h Micro + 2h Pharma). Remaining holidays (Mar 27–28, Apr 2–4, 13–15) and Sundays = 8h base + 2h Patho bonus. Weekdays = 4h (2h × 2 subjects). Once Pharma finishes, Patho takes over Pharma's slot. Click any day for details.
     </div>
   `;
   document.getElementById('content-dashboard').innerHTML=h;
