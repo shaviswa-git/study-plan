@@ -14,97 +14,81 @@
   --micro:#059669;--pharma:#6366f1;
   --parasitic:#db2777;--gi:#ea580c;--hepato:#7c3aed;--skin:#0284c7;--cns-m:#ca8a04;
   --cns-p:#9333ea;--autacoids:#c2410c;--git-p:#059669;--resp:#0891b2;--endo:#e11d48;
-  --s-bg:#d1fae5;--m-bg:#ffedd5;--l-bg:#ede9fe;--xl-bg:#ffe4e6;
   --done:#d1fae5;--done-text:#059669;
+  --holiday:#fef3c7;--holiday-border:#fbbf24;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .noise{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:.015;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");z-index:999}
-
 .container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
-
 header{padding:2rem 0 1rem}
 header h1{font-family:'Fraunces',serif;font-weight:900;font-size:2rem;background:linear-gradient(135deg,var(--micro),var(--pharma));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 header p{color:var(--text-dim);margin-top:.3rem;font-size:.9rem}
-
-/* Tabs */
 .tabs{display:flex;gap:.25rem;margin-bottom:1.5rem;background:var(--card);border-radius:12px;padding:.25rem;border:1px solid var(--border)}
 .tab-btn{flex:1;padding:.7rem 1rem;border:none;background:transparent;color:var(--text-dim);font-family:'DM Sans',sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;border-radius:10px;transition:all .25s}
 .tab-btn:hover{color:var(--text)}
-.tab-btn.active-micro{background:rgba(110,231,183,.12);color:var(--micro)}
-.tab-btn.active-pharma{background:rgba(129,140,248,.12);color:var(--pharma)}
-.tab-btn.active-dash{background:linear-gradient(135deg,rgba(110,231,183,.12),rgba(129,140,248,.12));color:var(--text)}
+.tab-btn.active-micro{background:rgba(5,150,105,.1);color:var(--micro)}
+.tab-btn.active-pharma{background:rgba(99,102,241,.1);color:var(--pharma)}
+.tab-btn.active-dash{background:linear-gradient(135deg,rgba(5,150,105,.08),rgba(99,102,241,.08));color:var(--text)}
 .tab-btn .tab-icon{margin-right:.4rem}
-
 .tab-content{display:none}
 .tab-content.active{display:block;animation:fadeIn .3s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-/* Stats */
 .stats-bar{display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap}
-.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;flex:1;min-width:120px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;flex:1;min-width:120px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .stat .label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:.15rem}
 .stat .value{font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem}
 .stat .value.micro-accent{color:var(--micro)}
 .stat .value.pharma-accent{color:var(--pharma)}
-
 .progress-wrap{margin-bottom:1.25rem}
-.progress-bar{height:6px;background:var(--card);border-radius:3px;overflow:hidden}
+.progress-bar{height:6px;background:rgba(0,0,0,.06);border-radius:3px;overflow:hidden}
 .progress-fill{height:100%;border-radius:3px;transition:width .5s ease}
 .progress-fill.micro{background:linear-gradient(90deg,var(--micro),#38bdf8)}
 .progress-fill.pharma{background:linear-gradient(90deg,var(--pharma),#c084fc)}
-
-/* Legend & Filters */
 .legend{display:flex;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:.3rem;font-size:.7rem;color:var(--text-dim)}
 .legend-dot{width:9px;height:9px;border-radius:3px}
-
 .controls{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap}
 .controls button{background:var(--card);border:1px solid var(--border);color:var(--text-dim);padding:.4rem .75rem;border-radius:8px;cursor:pointer;font-size:.75rem;font-family:'DM Sans',sans-serif;transition:all .2s}
 .controls button:hover,.controls button.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 .controls.pharma-controls button:hover,.controls.pharma-controls button.active{border-color:var(--pharma);color:var(--pharma);background:rgba(99,102,241,.08)}
-
-/* Calendar */
 .calendar{margin-bottom:1.5rem}
 .week{display:grid;grid-template-columns:70px 1fr;gap:0;margin-bottom:.4rem}
 .week-label{font-family:'Fraunces',serif;font-weight:600;font-size:.75rem;color:var(--text-dim);padding-top:.9rem;text-align:right;padding-right:.8rem}
 .week-days{display:grid;grid-template-columns:repeat(7,1fr);gap:.35rem}
 .day-hdr{text-align:center;font-size:.65rem;color:var(--text-dim);padding:.25rem 0;text-transform:uppercase;letter-spacing:.06em}
-
 .day-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.55rem;min-height:110px;cursor:pointer;transition:all .25s ease;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .day-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
 .day-card:hover.micro-day{border-color:var(--micro)}
 .day-card:hover.pharma-day{border-color:var(--pharma)}
 .day-card.today{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.day-card.holiday-day{background:var(--holiday);border-color:var(--holiday-border)}
 .day-card.completed{opacity:.65}
 .day-card.completed::after{content:'✓';position:absolute;top:.4rem;right:.5rem;font-weight:700;font-size:.8rem}
 .day-card.completed.micro-day::after{color:var(--micro)}
 .day-card.completed.pharma-day::after{color:var(--pharma)}
-
 .day-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
 .day-num{font-weight:700;font-size:.8rem}
 .day-name{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em}
+.day-type{font-size:.55rem;padding:.1rem .3rem;border-radius:3px;font-weight:600}
+.day-type.holiday{background:#fef3c7;color:#92400e}
+.day-type.sunday{background:#ede9fe;color:#6d28d9}
 .day-hrs{font-size:.6rem;font-weight:600}
 .day-hrs.micro-hrs{color:var(--micro)}
 .day-hrs.pharma-hrs{color:var(--pharma)}
-
 .chapter-pill{font-size:.62rem;padding:.2rem .4rem;border-radius:5px;margin-bottom:.25rem;line-height:1.3;display:flex;align-items:flex-start;gap:.25rem}
 .chapter-pill .effort{font-weight:700;flex-shrink:0;font-size:.58rem;padding:.05rem .2rem;border-radius:3px;background:rgba(0,0,0,.06)}
-/* Micro topic colors */
-.chapter-pill.parasitic{background:rgba(244,114,182,.12);color:var(--parasitic)}
-.chapter-pill.gi{background:rgba(251,146,60,.12);color:var(--gi)}
-.chapter-pill.hepato{background:rgba(167,139,250,.12);color:var(--hepato)}
-.chapter-pill.skin{background:rgba(56,189,248,.12);color:var(--skin)}
-.chapter-pill.cns_m{background:rgba(250,204,21,.12);color:var(--cns-m)}
-/* Pharma topic colors */
-.chapter-pill.cns_p{background:rgba(192,132,252,.12);color:var(--cns-p)}
-.chapter-pill.autacoids{background:rgba(249,115,22,.12);color:var(--autacoids)}
-.chapter-pill.git_p{background:rgba(52,211,153,.12);color:var(--git-p)}
-.chapter-pill.resp{background:rgba(6,182,212,.12);color:var(--resp)}
-.chapter-pill.endo{background:rgba(244,63,94,.12);color:var(--endo)}
-
+.chapter-pill.parasitic{background:rgba(219,39,119,.1);color:var(--parasitic)}
+.chapter-pill.gi{background:rgba(234,88,12,.1);color:var(--gi)}
+.chapter-pill.hepato{background:rgba(124,58,237,.1);color:var(--hepato)}
+.chapter-pill.skin{background:rgba(2,132,199,.1);color:var(--skin)}
+.chapter-pill.cns_m{background:rgba(202,138,4,.1);color:var(--cns-m)}
+.chapter-pill.cns_p{background:rgba(147,51,234,.1);color:var(--cns-p)}
+.chapter-pill.autacoids{background:rgba(194,65,12,.1);color:var(--autacoids)}
+.chapter-pill.git_p{background:rgba(5,150,105,.1);color:var(--git-p)}
+.chapter-pill.resp{background:rgba(8,145,178,.1);color:var(--resp)}
+.chapter-pill.endo{background:rgba(225,29,72,.1);color:var(--endo)}
+.chapter-pill.revision{background:rgba(0,0,0,.04);color:var(--text-dim);font-style:italic}
 .day-empty{background:transparent;border:1px dashed var(--border);border-radius:10px;min-height:110px;opacity:.3}
-
-/* Modal */
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.3);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-overlay.show{display:flex}
 .modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;animation:slideUp .3s ease;box-shadow:0 8px 32px rgba(0,0,0,.12)}
@@ -124,12 +108,10 @@ header p{color:var(--text-dim);margin-top:.3rem;font-size:.9rem}
 .modal-btn.toggle-micro:hover{background:var(--micro);color:#fff}
 .modal-btn.toggle-pharma{background:rgba(99,102,241,.1);color:var(--pharma)}
 .modal-btn.toggle-pharma:hover{background:var(--pharma);color:#fff}
-.modal-btn.undo{background:rgba(251,113,133,.12);color:#fb7185}
+.modal-btn.undo{background:rgba(251,113,133,.12);color:#e11d48}
 .modal-btn.undo:hover{background:rgba(251,113,133,.25)}
-
-/* Dashboard */
 .dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
-.dash-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;position:relative;overflow:hidden}
+.dash-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .dash-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .dash-card.micro-card::before{background:linear-gradient(90deg,var(--micro),#38bdf8)}
 .dash-card.pharma-card::before{background:linear-gradient(90deg,var(--pharma),#c084fc)}
@@ -138,8 +120,7 @@ header p{color:var(--text-dim);margin-top:.3rem;font-size:.9rem}
 .dash-card .dash-stat:last-child{border-bottom:none}
 .dash-card .dash-stat .ds-label{font-size:.8rem;color:var(--text-dim)}
 .dash-card .dash-stat .ds-value{font-weight:700;font-size:.85rem}
-
-.combined-stats{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.combined-stats{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .combined-stats::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--micro),var(--pharma))}
 .combined-stats h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;margin-bottom:.6rem}
 .dual-progress{display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem}
@@ -147,66 +128,45 @@ header p{color:var(--text-dim);margin-top:.3rem;font-size:.9rem}
 .dual-progress .dp-bar{flex:1;height:8px;background:rgba(0,0,0,.06);border-radius:4px;overflow:hidden}
 .dual-progress .dp-fill{height:100%;border-radius:4px;transition:width .5s ease}
 .dual-progress .dp-pct{font-size:.75rem;font-weight:600;width:40px;text-align:right}
-
-.daily-overview{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem}
+.daily-overview{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.04)}
 .daily-overview h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;margin-bottom:.8rem}
 .daily-row{display:flex;align-items:center;gap:.5rem;padding:.35rem 0;border-bottom:1px solid rgba(0,0,0,.04)}
 .daily-row:last-child{border-bottom:none}
-.daily-row .dr-date{font-size:.75rem;width:80px;flex-shrink:0;color:var(--text-dim)}
+.daily-row .dr-date{font-size:.75rem;width:90px;flex-shrink:0;color:var(--text-dim)}
+.daily-row .dr-badge{font-size:.55rem;width:50px;flex-shrink:0;text-align:center}
+.daily-row .dr-badge span{padding:.1rem .3rem;border-radius:3px;font-weight:600}
+.daily-row .dr-badge .hol{background:#fef3c7;color:#92400e}
+.daily-row .dr-badge .sun{background:#ede9fe;color:#6d28d9}
 .daily-row .dr-bars{flex:1;display:flex;gap:2px;height:18px;align-items:center}
 .daily-row .dr-bar{height:100%;border-radius:3px;transition:all .3s}
-.daily-row .dr-bar.micro-bar{background:var(--micro);opacity:.7}
-.daily-row .dr-bar.pharma-bar{background:var(--pharma);opacity:.7}
-.daily-row .dr-bar.micro-bar.done{opacity:1;background:var(--micro)}
-.daily-row .dr-bar.pharma-bar.done{opacity:1;background:var(--pharma)}
+.daily-row .dr-bar.micro-bar{background:var(--micro)}
+.daily-row .dr-bar.pharma-bar{background:var(--pharma)}
+.daily-row .dr-bar.done{opacity:1}
 .daily-row .dr-bar.undone{opacity:.2}
 .daily-row .dr-hrs{font-size:.7rem;width:55px;text-align:right;color:var(--text-dim)}
-.daily-row.is-today{background:rgba(5,150,105,.08);border-radius:6px;padding:.35rem .5rem}
-
+.daily-row.is-today{background:rgba(5,150,105,.06);border-radius:6px;padding:.35rem .5rem}
 .footer-note{font-size:.75rem;color:var(--text-dim);line-height:1.5;margin-bottom:2rem}
 .footer-note strong{color:var(--text)}
-
-@media(max-width:900px){
-  .week{grid-template-columns:1fr}
-  .week-label{text-align:left;padding:0 0 .25rem 0}
-  .week-days{grid-template-columns:repeat(3,1fr)}
-  header h1{font-size:1.5rem}
-  .dash-grid{grid-template-columns:1fr}
-}
-@media(max-width:500px){
-  .week-days{grid-template-columns:repeat(2,1fr)}
-  .stats-bar{flex-direction:column}
-  .tabs{flex-direction:column}
-}
+@media(max-width:900px){.week{grid-template-columns:1fr}.week-label{text-align:left;padding:0 0 .25rem 0}.week-days{grid-template-columns:repeat(3,1fr)}header h1{font-size:1.5rem}.dash-grid{grid-template-columns:1fr}}
+@media(max-width:500px){.week-days{grid-template-columns:repeat(2,1fr)}.stats-bar{flex-direction:column}.tabs{flex-direction:column}}
 </style>
 </head>
 <body>
 <div class="noise"></div>
 <div class="container">
-
 <header>
   <h1>Study Command Center</h1>
-  <p>Mar 27 – Apr 20, 2026 · Microbiology & Pharmacology · 2h weekdays + 3h weekends</p>
+  <p>Mar 26 – Apr 20, 2026 · Microbiology & Pharmacology · 4h weekdays · 8h holidays & Sundays</p>
 </header>
-
 <div class="tabs">
   <button class="tab-btn active-dash" data-tab="dashboard" id="tabDash"><span class="tab-icon">◉</span>Dashboard</button>
   <button class="tab-btn" data-tab="micro" id="tabMicro"><span class="tab-icon">🦠</span>Microbiology</button>
   <button class="tab-btn" data-tab="pharma" id="tabPharma"><span class="tab-icon">💊</span>Pharmacology</button>
 </div>
-
-<!-- DASHBOARD TAB -->
 <div class="tab-content active" id="content-dashboard"></div>
-
-<!-- MICROBIOLOGY TAB -->
 <div class="tab-content" id="content-micro"></div>
-
-<!-- PHARMACOLOGY TAB -->
 <div class="tab-content" id="content-pharma"></div>
-
-</div><!-- container -->
-
-<!-- Modal -->
+</div>
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modal">
     <h3 id="modalTitle"></h3>
@@ -215,19 +175,11 @@ header p{color:var(--text-dim);margin-top:.3rem;font-size:.9rem}
     <div class="modal-actions" id="modalActions"></div>
   </div>
 </div>
-
 <script>
-// ===================== DATA =====================
-const MICRO_TOPICS = {
-  parasitic:"Parasitic CVS", gi:"GI Infections", hepato:"Hepatobiliary",
-  skin:"Skin & Soft Tissue", cns_m:"CNS Infections"
-};
-const PHARMA_TOPICS = {
-  cns_p:"CNS", autacoids:"Autacoids", git_p:"GIT",
-  resp:"Respiratory", endo:"Endocrine"
-};
+const MICRO_TOPICS={parasitic:"Parasitic CVS",gi:"GI Infections",hepato:"Hepatobiliary",skin:"Skin & Soft Tissue",cns_m:"CNS Infections"};
+const PHARMA_TOPICS={cns_p:"CNS",autacoids:"Autacoids",git_p:"GIT",resp:"Respiratory",endo:"Endocrine"};
 
-const microChapters = [
+const microChapters=[
   {id:1,name:"Malaria and Babesiosis",topic:"parasitic",effort:"M",hrs:2.25},
   {id:2,name:"Visceral Leishmaniasis and Trypanosomiasis",topic:"parasitic",effort:"S",hrs:1.25},
   {id:3,name:"Lymphatic Filariasis",topic:"parasitic",effort:"S",hrs:1.25},
@@ -259,7 +211,7 @@ const microChapters = [
   {id:75,name:"Parasitic & Fungal Infections of CNS",topic:"cns_m",effort:"L",hrs:3},
 ];
 
-const pharmaChapters = [
+const pharmaChapters=[
   {id:28,name:"General Anaesthetics",topic:"cns_p",effort:"L",hrs:3},
   {id:29,name:"Sedative-Hypnotics",topic:"cns_p",effort:"M",hrs:2.25},
   {id:30,name:"Antiepileptic Drugs",topic:"cns_p",effort:"L",hrs:3},
@@ -268,11 +220,11 @@ const pharmaChapters = [
   {id:33,name:"Antidepressant and Antianxiety Drugs",topic:"cns_p",effort:"L",hrs:3},
   {id:34,name:"Opioid Analgesics and Antagonists",topic:"cns_p",effort:"L",hrs:3},
   {id:35,name:"CNS Stimulants and Cognition Enhancers",topic:"cns_p",effort:"S",hrs:1.25},
-  {id:11,name:"Histamine and Antihistaminics",topic:"autacoids",effort:"S",hrs:1.25},
-  {id:12,name:"5-HT, Antagonists and Migraine Therapy",topic:"autacoids",effort:"M",hrs:2.25},
-  {id:13,name:"Prostaglandins, Leukotrienes and PAF",topic:"autacoids",effort:"S",hrs:1.25},
-  {id:14,name:"NSAIDs and Antipyretic-Analgesics",topic:"autacoids",effort:"L",hrs:3},
-  {id:15,name:"Antirheumatoid and Antigout Drugs",topic:"autacoids",effort:"S",hrs:1.25},
+  {id:111,name:"Histamine and Antihistaminics",topic:"autacoids",effort:"S",hrs:1.25},
+  {id:112,name:"5-HT, Antagonists and Migraine Therapy",topic:"autacoids",effort:"M",hrs:2.25},
+  {id:113,name:"Prostaglandins, Leukotrienes and PAF",topic:"autacoids",effort:"S",hrs:1.25},
+  {id:114,name:"NSAIDs and Antipyretic-Analgesics",topic:"autacoids",effort:"L",hrs:3},
+  {id:115,name:"Antirheumatoid and Antigout Drugs",topic:"autacoids",effort:"S",hrs:1.25},
   {id:47,name:"Drugs for Peptic Ulcer and GERD",topic:"git_p",effort:"M",hrs:2.25},
   {id:48,name:"Antiemetic, Prokinetic and Digestant Drugs",topic:"git_p",effort:"M",hrs:2.25},
   {id:49,name:"Drugs for Constipation and Diarrhoea",topic:"git_p",effort:"L",hrs:3},
@@ -283,14 +235,25 @@ const pharmaChapters = [
   {id:104,name:"Corticosteroids",topic:"endo",effort:"L",hrs:3},
 ];
 
-// ===================== SCHEDULING =====================
+const HOLIDAYS=new Set(['2026-03-26','2026-03-27','2026-03-28','2026-04-02','2026-04-03','2026-04-04','2026-04-13','2026-04-14','2026-04-15']);
+function dateKey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+
 function buildDates(){
   const dates=[];
-  let d=new Date(2026,2,27);
+  let d=new Date(2026,2,26);
   const end=new Date(2026,3,20);
   while(d<=end){
     const dow=d.getDay();
-    dates.push({date:new Date(d),hrs:dow===0||dow===6?3:2,isWeekend:dow===0||dow===6});
+    const isHoliday=HOLIDAYS.has(dateKey(d));
+    const isSunday=dow===0;
+    const is8h=isHoliday||isSunday;
+    const totalHrs=is8h?8:4;
+    const perSubject=totalHrs/2;
+    let dayType='weekday';
+    if(isHoliday&&isSunday)dayType='holiday+sunday';
+    else if(isHoliday)dayType='holiday';
+    else if(isSunday)dayType='sunday';
+    dates.push({date:new Date(d),totalHrs,perSubject,isHoliday,isSunday,is8h,dayType});
     d.setDate(d.getDate()+1);
   }
   return dates;
@@ -306,107 +269,94 @@ function assignChapters(chapters,dates){
       segments.push({...ch,partLabel:null,partHrs:ch.hrs});
     }
   });
-  const schedule=dates.map(d=>({...d,items:[],totalPlanned:0}));
+  const schedule=dates.map(d=>({...d,items:[],plannedHrs:0}));
   let di=0;
   for(let si=0;si<segments.length;si++){
     const seg=segments[si];
     let remaining=seg.partHrs;
-    while(remaining>0&&di<schedule.length){
+    while(remaining>0.01&&di<schedule.length){
       const day=schedule[di];
-      const available=day.hrs-day.totalPlanned;
-      if(available<=0){di++;continue;}
+      const available=day.perSubject-day.plannedHrs;
+      if(available<=0.01){di++;continue;}
       const alloc=Math.min(remaining,available);
       day.items.push({chapter:seg,allocHrs:Math.round(alloc*100)/100});
-      day.totalPlanned=Math.round((day.totalPlanned+alloc)*100)/100;
+      day.plannedHrs=Math.round((day.plannedHrs+alloc)*100)/100;
       remaining=Math.round((remaining-alloc)*100)/100;
-      if(remaining<=0)break;
-      if(day.totalPlanned>=day.hrs)di++;
+      if(remaining<=0.01)break;
+      if(day.plannedHrs>=day.perSubject-0.01)di++;
+    }
+  }
+  for(let i=0;i<schedule.length;i++){
+    if(schedule[i].items.length===0){
+      schedule[i].items.push({chapter:{id:'rev',name:'Revision & Practice',topic:'revision',effort:'R',hrs:0},allocHrs:schedule[i].perSubject});
+      schedule[i].plannedHrs=schedule[i].perSubject;
     }
   }
   return schedule;
 }
 
 const allDates=buildDates();
-const microSchedule=assignChapters(microChapters,allDates.map(d=>({...d})));
-const pharmaSchedule=assignChapters(pharmaChapters,allDates.map(d=>({...d})));
+const microSchedule=assignChapters(microChapters,allDates);
+const pharmaSchedule=assignChapters(pharmaChapters,allDates);
 
-// ===================== STATE =====================
-let microCompleted={}, pharmaCompleted={};
-try{
-  const ms=sessionStorage.getItem('sc_micro');if(ms)microCompleted=JSON.parse(ms);
-  const ps=sessionStorage.getItem('sc_pharma');if(ps)pharmaCompleted=JSON.parse(ps);
-}catch(e){}
-function saveState(){
-  try{
-    sessionStorage.setItem('sc_micro',JSON.stringify(microCompleted));
-    sessionStorage.setItem('sc_pharma',JSON.stringify(pharmaCompleted));
-  }catch(e){}
-}
+let microCompleted={},pharmaCompleted={};
+try{const ms=sessionStorage.getItem('sc3_micro');if(ms)microCompleted=JSON.parse(ms);const ps=sessionStorage.getItem('sc3_pharma');if(ps)pharmaCompleted=JSON.parse(ps);}catch(e){}
+function saveState(){try{sessionStorage.setItem('sc3_micro',JSON.stringify(microCompleted));sessionStorage.setItem('sc3_pharma',JSON.stringify(pharmaCompleted));}catch(e){}}
 
-// ===================== HELPERS =====================
 const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const MONTHS_S=['Jan','Feb','Mar','Apr','May'];
 const MONTHS_L=['January','February','March','April','May'];
 const today=new Date();
 
-function calcStats(schedule,completed){
+function calcStats(schedule,completed,chapters){
   const totalDays=schedule.length;
   const doneDays=Object.keys(completed).filter(k=>completed[k]).length;
-  const totalHrs=schedule.reduce((s,d)=>s+d.totalPlanned,0);
-  const doneHrs=schedule.filter((_,i)=>completed[i]).reduce((s,d)=>s+d.totalPlanned,0);
-  const chIds=new Set();
-  schedule.forEach((day,di)=>{if(completed[di])day.items.forEach(it=>chIds.add(it.chapter.id+(it.chapter.partLabel||'')));});
-  const totalChapters=new Set(schedule.flatMap(d=>d.items.map(it=>it.chapter.id))).size;
-  return{totalDays,doneDays,totalHrs:Math.round(totalHrs*10)/10,doneHrs:Math.round(doneHrs*10)/10,totalChapters,doneChIds:chIds};
+  const totalHrs=schedule.reduce((s,d)=>s+d.plannedHrs,0);
+  const doneHrs=schedule.filter((_,i)=>completed[i]).reduce((s,d)=>s+d.plannedHrs,0);
+  const totalChapters=chapters.length;
+  const contentDays=schedule.filter(d=>d.items.some(it=>it.chapter.id!=='rev')).length;
+  const revisionDays=schedule.filter(d=>d.items.every(it=>it.chapter.id==='rev')).length;
+  return{totalDays,doneDays,totalHrs:Math.round(totalHrs*10)/10,doneHrs:Math.round(doneHrs*10)/10,totalChapters,contentDays,revisionDays};
 }
 
-// ===================== RENDER CALENDAR =====================
-function renderSubjectTab(containerId, schedule, completed, topicsMap, subject, accentClass, filterClass){
+function renderSubjectTab(containerId,schedule,completed,topicsMap,subject,accentClass,filterClass,chapters){
   const container=document.getElementById(containerId);
-  const stats=calcStats(schedule,completed);
-
+  const stats=calcStats(schedule,completed,chapters);
   let html=`
     <div class="stats-bar">
-      <div class="stat"><div class="label">Days</div><div class="value">${stats.totalDays}</div></div>
-      <div class="stat"><div class="label">Done</div><div class="value ${accentClass}">${stats.doneDays}</div></div>
+      <div class="stat"><div class="label">Study Days</div><div class="value">${stats.contentDays}</div></div>
+      <div class="stat"><div class="label">Revision Days</div><div class="value">${stats.revisionDays}</div></div>
+      <div class="stat"><div class="label">Done</div><div class="value ${accentClass}">${stats.doneDays} days</div></div>
       <div class="stat"><div class="label">Hours</div><div class="value">${stats.totalHrs}</div></div>
       <div class="stat"><div class="label">Completed</div><div class="value ${accentClass}">${stats.doneHrs}h</div></div>
-      <div class="stat"><div class="label">Chapters</div><div class="value">${stats.totalChapters}</div></div>
     </div>
-    <div class="progress-wrap">
-      <div class="progress-bar"><div class="progress-fill ${subject}" style="width:${stats.totalDays>0?(stats.doneDays/stats.totalDays)*100:0}%"></div></div>
+    <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill ${subject}" style="width:${stats.totalDays>0?(stats.doneDays/stats.totalDays)*100:0}%"></div></div></div>
+    <div class="legend">
+      ${Object.entries(topicsMap).map(([k,v])=>`<div class="legend-item"><div class="legend-dot" style="background:var(--${k})"></div>${v}</div>`).join('')}
+      <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div>Holiday</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Sunday</div>
     </div>
-    <div class="legend">${Object.entries(topicsMap).map(([k,v])=>`<div class="legend-item"><div class="legend-dot" style="background:var(--${k})"></div>${v}</div>`).join('')}</div>
     <div class="controls ${filterClass}" id="filters-${subject}"></div>
     <div class="calendar" id="cal-${subject}"></div>
-    <div class="footer-note"><strong>Tip:</strong> Click any day to view details and mark complete. XL chapters split across 2 days. Progress saved in session.</div>
+    <div class="footer-note"><strong>Tip:</strong> Click any day to view details and mark complete. Yellow-tinted days = holidays/Sundays (4h per subject). Grey italic days = Revision.</div>
   `;
   container.innerHTML=html;
-
-  // Filters
   let activeFilter=null;
   function renderFilters(){
     const fc=document.getElementById(`filters-${subject}`);
-    fc.innerHTML=`<button class="${!activeFilter?'active':''}" data-f="">All</button>`+
-      Object.entries(topicsMap).map(([k,v])=>`<button class="${activeFilter===k?'active':''}" data-f="${k}">${v}</button>`).join('');
-    fc.querySelectorAll('button').forEach(btn=>{
-      btn.onclick=()=>{activeFilter=btn.dataset.f||null;renderFilters();renderCal();};
-    });
+    fc.innerHTML=`<button class="${!activeFilter?'active':''}" data-f="">All</button>`+Object.entries(topicsMap).map(([k,v])=>`<button class="${activeFilter===k?'active':''}" data-f="${k}">${v}</button>`).join('');
+    fc.querySelectorAll('button').forEach(btn=>{btn.onclick=()=>{activeFilter=btn.dataset.f||null;renderFilters();renderCal();};});
   }
-
   function renderCal(){
-    const cal=document.getElementById(`cal-${subject}`);
-    cal.innerHTML='';
+    const cal=document.getElementById(`cal-${subject}`);cal.innerHTML='';
     let weeks=[],cw=[];
     let sd=schedule[0].date.getDay();if(sd===0)sd=7;
     for(let i=1;i<sd;i++)cw.push(null);
     schedule.forEach((day,idx)=>{day._idx=idx;cw.push(day);if(day.date.getDay()===0){weeks.push(cw);cw=[];}});
     if(cw.length){while(cw.length<7)cw.push(null);weeks.push(cw);}
-
     const hdr=document.createElement('div');hdr.className='week';
     hdr.innerHTML=`<div class="week-label"></div><div class="week-days">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="day-hdr">${d}</div>`).join('')}</div>`;
     cal.appendChild(hdr);
-
     weeks.forEach(week=>{
       const fd=week.find(d=>d!==null);
       const row=document.createElement('div');row.className='week';
@@ -418,62 +368,60 @@ function renderSubjectTab(containerId, schedule, completed, topicsMap, subject, 
         if(!day){const e=document.createElement('div');e.className='day-empty';dd.appendChild(e);return;}
         const card=document.createElement('div');
         card.className=`day-card ${subject}-day`;
+        if(day.is8h)card.classList.add('holiday-day');
         if(completed[day._idx])card.classList.add('completed');
         if(day.date.toDateString()===today.toDateString())card.classList.add('today');
+        let typeTag='';
+        if(day.isHoliday)typeTag=`<span class="day-type holiday">HOL</span>`;
+        else if(day.isSunday)typeTag=`<span class="day-type sunday">SUN</span>`;
         let pills='';
         day.items.forEach(it=>{
-          if(activeFilter&&it.chapter.topic!==activeFilter)return;
+          if(activeFilter&&it.chapter.topic!==activeFilter&&it.chapter.topic!=='revision')return;
           const part=it.chapter.partLabel?` (${it.chapter.partLabel})`:'';
-          const short=it.chapter.name.length>42?it.chapter.name.slice(0,39)+'…':it.chapter.name;
+          const short=it.chapter.name.length>40?it.chapter.name.slice(0,37)+'…':it.chapter.name;
           pills+=`<div class="chapter-pill ${it.chapter.topic}"><span class="effort">${it.chapter.effort}</span>${short}${part}</div>`;
         });
-        card.innerHTML=`<div class="day-header"><div><span class="day-num">${day.date.getDate()}</span> <span class="day-name">${DOW[day.date.getDay()]}</span></div><div class="day-hrs ${subject}-hrs">${day.totalPlanned}h</div></div>${pills}`;
+        card.innerHTML=`<div class="day-header"><div><span class="day-num">${day.date.getDate()}</span> <span class="day-name">${DOW[day.date.getDay()]}</span> ${typeTag}</div><div class="day-hrs ${subject}-hrs">${day.plannedHrs}h</div></div>${pills}`;
         card.onclick=()=>openModal(day,schedule,completed,subject,topicsMap);
         dd.appendChild(card);
       });
       row.appendChild(dd);cal.appendChild(row);
     });
   }
-
   renderFilters();renderCal();
 }
 
-// ===================== MODAL =====================
 function openModal(day,schedule,completed,subject,topicsMap){
   const overlay=document.getElementById('modalOverlay');
   document.getElementById('modalTitle').textContent=DOW[day.date.getDay()]+', '+MONTHS_L[day.date.getMonth()]+' '+day.date.getDate();
-  document.getElementById('modalDate').textContent=`${day.totalPlanned}h planned · ${day.isWeekend?'Weekend (3h)':'Weekday (2h)'}`;
+  let typeStr=day.dayType==='weekday'?'Weekday (2h/subject)':day.dayType==='holiday'?'Holiday (4h/subject)':day.dayType==='sunday'?'Sunday (4h/subject)':'Holiday + Sunday (4h/subject)';
+  document.getElementById('modalDate').textContent=`${day.plannedHrs}h planned · ${typeStr}`;
   let body='';
   day.items.forEach(it=>{
     const part=it.chapter.partLabel?' — '+it.chapter.partLabel:'';
-    body+=`<div class="modal-chapter"><h4>${it.chapter.name}${part}</h4><p>Effort: ${it.chapter.effort} · ${it.allocHrs}h today</p><div class="tags"><span class="tag">${topicsMap[it.chapter.topic]||it.chapter.topic}</span><span class="tag">Ch. ${it.chapter.id}</span></div></div>`;
+    const topicLabel=topicsMap[it.chapter.topic]||it.chapter.topic;
+    body+=`<div class="modal-chapter"><h4>${it.chapter.name}${part}</h4><p>Effort: ${it.chapter.effort} · ${it.allocHrs}h today</p><div class="tags"><span class="tag">${topicLabel}</span>${it.chapter.id!=='rev'?`<span class="tag">Ch. ${it.chapter.id}</span>`:''}</div></div>`;
   });
   document.getElementById('modalBody').innerHTML=body;
   const isDone=completed[day._idx];
   const btnClass=subject==='micro'?'toggle-micro':'toggle-pharma';
   document.getElementById('modalActions').innerHTML=`
     <button class="modal-btn ${isDone?'undo':btnClass}" id="toggleBtn">${isDone?'✕ Mark Incomplete':'✓ Mark Complete'}</button>
-    <button class="modal-btn close" id="closeBtn">Close</button>
-  `;
+    <button class="modal-btn close" id="closeBtn">Close</button>`;
   overlay.classList.add('show');
-  document.getElementById('toggleBtn').onclick=()=>{
-    completed[day._idx]=!completed[day._idx];saveState();renderAll();overlay.classList.remove('show');
-  };
+  document.getElementById('toggleBtn').onclick=()=>{completed[day._idx]=!completed[day._idx];saveState();renderAll();overlay.classList.remove('show');};
   document.getElementById('closeBtn').onclick=()=>overlay.classList.remove('show');
 }
 document.getElementById('modalOverlay').onclick=e=>{if(e.target===e.currentTarget)e.currentTarget.classList.remove('show');};
 
-// ===================== DASHBOARD =====================
 function renderDashboard(){
-  const ms=calcStats(microSchedule,microCompleted);
-  const ps=calcStats(pharmaSchedule,pharmaCompleted);
+  const ms=calcStats(microSchedule,microCompleted,microChapters);
+  const ps=calcStats(pharmaSchedule,pharmaCompleted,pharmaChapters);
   const totalHrs=ms.totalHrs+ps.totalHrs;
   const doneHrs=ms.doneHrs+ps.doneHrs;
-  const totalDays=ms.totalDays;
-  const microPct=ms.totalDays>0?Math.round((ms.doneDays/ms.totalDays)*100):0;
-  const pharmaPct=ps.totalDays>0?Math.round((ps.doneDays/ps.totalDays)*100):0;
+  const microPct=ms.totalHrs>0?Math.round((ms.doneHrs/ms.totalHrs)*100):0;
+  const pharmaPct=ps.totalHrs>0?Math.round((ps.doneHrs/ps.totalHrs)*100):0;
   const overallPct=totalHrs>0?Math.round((doneHrs/totalHrs)*100):0;
-
   let html=`
     <div class="combined-stats">
       <h3>Overall Progress</h3>
@@ -481,73 +429,75 @@ function renderDashboard(){
         <div><span style="font-size:.75rem;color:var(--text-dim)">Total Hours</span><div style="font-family:'Fraunces',serif;font-weight:700;font-size:1.5rem">${totalHrs}</div></div>
         <div><span style="font-size:.75rem;color:var(--text-dim)">Completed</span><div style="font-family:'Fraunces',serif;font-weight:700;font-size:1.5rem;color:var(--accent)">${doneHrs}h</div></div>
         <div><span style="font-size:.75rem;color:var(--text-dim)">Overall</span><div style="font-family:'Fraunces',serif;font-weight:700;font-size:1.5rem">${overallPct}%</div></div>
+        <div><span style="font-size:.75rem;color:var(--text-dim)">Revision Days</span><div style="font-family:'Fraunces',serif;font-weight:700;font-size:1.5rem;color:var(--pharma)">${Math.max(ms.revisionDays,ps.revisionDays)}</div></div>
       </div>
       <div class="dual-progress"><div class="dp-label" style="color:var(--micro)">Microbiology</div><div class="dp-bar"><div class="dp-fill" style="width:${microPct}%;background:var(--micro)"></div></div><div class="dp-pct" style="color:var(--micro)">${microPct}%</div></div>
       <div class="dual-progress"><div class="dp-label" style="color:var(--pharma)">Pharmacology</div><div class="dp-bar"><div class="dp-fill" style="width:${pharmaPct}%;background:var(--pharma)"></div></div><div class="dp-pct" style="color:var(--pharma)">${pharmaPct}%</div></div>
     </div>
-
     <div class="dash-grid">
       <div class="dash-card micro-card">
         <h3 style="color:var(--micro)">🦠 Microbiology</h3>
         <div class="dash-stat"><span class="ds-label">Chapters</span><span class="ds-value">${ms.totalChapters}</span></div>
+        <div class="dash-stat"><span class="ds-label">Study days</span><span class="ds-value">${ms.contentDays}</span></div>
+        <div class="dash-stat"><span class="ds-label">Revision days</span><span class="ds-value">${ms.revisionDays}</span></div>
         <div class="dash-stat"><span class="ds-label">Hours planned</span><span class="ds-value">${ms.totalHrs}h</span></div>
         <div class="dash-stat"><span class="ds-label">Hours done</span><span class="ds-value" style="color:var(--micro)">${ms.doneHrs}h</span></div>
-        <div class="dash-stat"><span class="ds-label">Days done</span><span class="ds-value" style="color:var(--micro)">${ms.doneDays} / ${ms.totalDays}</span></div>
       </div>
       <div class="dash-card pharma-card">
         <h3 style="color:var(--pharma)">💊 Pharmacology</h3>
         <div class="dash-stat"><span class="ds-label">Chapters</span><span class="ds-value">${ps.totalChapters}</span></div>
+        <div class="dash-stat"><span class="ds-label">Study days</span><span class="ds-value">${ps.contentDays}</span></div>
+        <div class="dash-stat"><span class="ds-label">Revision days</span><span class="ds-value">${ps.revisionDays}</span></div>
         <div class="dash-stat"><span class="ds-label">Hours planned</span><span class="ds-value">${ps.totalHrs}h</span></div>
         <div class="dash-stat"><span class="ds-label">Hours done</span><span class="ds-value" style="color:var(--pharma)">${ps.doneHrs}h</span></div>
-        <div class="dash-stat"><span class="ds-label">Days done</span><span class="ds-value" style="color:var(--pharma)">${ps.doneDays} / ${ps.totalDays}</span></div>
       </div>
     </div>
-
     <div class="daily-overview">
-      <h3>Daily Load — Micro + Pharma</h3>
-      <div style="font-size:.72rem;color:var(--text-dim);margin-bottom:.6rem">Each bar = hours per subject. Bright = done, faded = pending.</div>
+      <h3>Daily Load — Micro + Pharma Combined</h3>
+      <div style="font-size:.72rem;color:var(--text-dim);margin-bottom:.6rem">Green = Micro · Purple = Pharma · Bright = done · Faded = pending</div>
       ${allDates.map((_,i)=>{
-        const md=microSchedule[i], pd=pharmaSchedule[i];
-        const mh=md.totalPlanned, ph=pd.totalPlanned;
-        const mc=microCompleted[i], pc=pharmaCompleted[i];
+        const md=microSchedule[i],pd=pharmaSchedule[i];
+        const mh=md.plannedHrs,ph=pd.plannedHrs;
+        const mc=microCompleted[i],pc=pharmaCompleted[i];
         const isT=md.date.toDateString()===today.toDateString();
-        const maxH=5;
+        const maxH=4;
         const mw=mh>0?Math.max((mh/maxH)*100,8):0;
         const pw=ph>0?Math.max((ph/maxH)*100,8):0;
         const dt=md.date;
+        let badge='';
+        if(md.isHoliday)badge='<span class="hol">HOL</span>';
+        else if(md.isSunday)badge='<span class="sun">SUN</span>';
         return `<div class="daily-row${isT?' is-today':''}">
           <div class="dr-date">${MONTHS_S[dt.getMonth()]} ${dt.getDate()} ${DOW[dt.getDay()]}</div>
+          <div class="dr-badge">${badge}</div>
           <div class="dr-bars">
             ${mh>0?`<div class="dr-bar micro-bar${mc?' done':' undone'}" style="width:${mw}%" title="Micro: ${mh}h"></div>`:''}
             ${ph>0?`<div class="dr-bar pharma-bar${pc?' done':' undone'}" style="width:${pw}%" title="Pharma: ${ph}h"></div>`:''}
           </div>
-          <div class="dr-hrs">${mh+ph}h total</div>
+          <div class="dr-hrs">${mh+ph}h</div>
         </div>`;
       }).join('')}
     </div>
-
-    <div class="footer-note"><strong>How to use:</strong> Switch to Microbiology or Pharmacology tabs to view detailed calendars and mark days complete. Progress updates here automatically. Total daily commitment across both subjects shown in the daily load chart above.</div>
+    <div class="footer-note"><strong>Schedule:</strong> Weekdays = 4h (2h Micro + 2h Pharma). Holidays & Sundays = 8h (4h + 4h). Holidays: Mar 26–28, Apr 2–4, Apr 13–15. After all chapters are done, remaining days are revision. Total: ${totalHrs}h across both subjects.</div>
   `;
   document.getElementById('content-dashboard').innerHTML=html;
 }
 
-// ===================== TABS =====================
 const tabBtns=document.querySelectorAll('.tab-btn');
 function switchTab(tab){
   tabBtns.forEach(b=>{b.className='tab-btn';});
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  if(tab==='dashboard'){document.getElementById('tabDash').className='tab-btn active-dash';}
-  else if(tab==='micro'){document.getElementById('tabMicro').className='tab-btn active-micro';}
-  else{document.getElementById('tabPharma').className='tab-btn active-pharma';}
+  if(tab==='dashboard')document.getElementById('tabDash').className='tab-btn active-dash';
+  else if(tab==='micro')document.getElementById('tabMicro').className='tab-btn active-micro';
+  else document.getElementById('tabPharma').className='tab-btn active-pharma';
   document.getElementById('content-'+tab).classList.add('active');
 }
-tabBtns.forEach(btn=>{btn.onclick=()=>{switchTab(btn.dataset.tab);};});
+tabBtns.forEach(btn=>{btn.onclick=()=>switchTab(btn.dataset.tab);});
 
-// ===================== RENDER ALL =====================
 function renderAll(){
   renderDashboard();
-  renderSubjectTab('content-micro',microSchedule,microCompleted,MICRO_TOPICS,'micro','micro-accent','');
-  renderSubjectTab('content-pharma',pharmaSchedule,pharmaCompleted,PHARMA_TOPICS,'pharma','pharma-accent','pharma-controls');
+  renderSubjectTab('content-micro',microSchedule,microCompleted,MICRO_TOPICS,'micro','micro-accent','',microChapters);
+  renderSubjectTab('content-pharma',pharmaSchedule,pharmaCompleted,PHARMA_TOPICS,'pharma','pharma-accent','pharma-controls',pharmaChapters);
 }
 renderAll();
 </script>
