@@ -142,8 +142,16 @@ header p{color:var(--text-dim);margin-top:.3rem;font-size:.88rem}
 <body>
 <div class="container">
 <header>
-  <h1>Study Command Center</h1>
-  <p>Mar 26 – Apr 20, 2026 · Microbiology · Pharmacology · Pathology · Starting today (4h)</p>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem">
+    <div>
+      <h1>Study Command Center</h1>
+      <p>Mar 26 – Apr 20, 2026 · Microbiology · Pharmacology · Pathology · Starting today (4h)</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;margin-top:.3rem">
+      <div id="syncBadge" style="font-size:.72rem;cursor:pointer" onclick="showTokenPrompt()"></div>
+      <button onclick="showTokenPrompt()" style="font-size:.68rem;padding:.3rem .6rem;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);cursor:pointer;font-family:'DM Sans',sans-serif">⚙ Sync</button>
+    </div>
+  </div>
 </header>
 <div class="tabs">
   <button class="tab-btn active-dash" data-tab="dashboard" id="tabDash">◉ Dashboard</button>
@@ -155,6 +163,20 @@ header p{color:var(--text-dim);margin-top:.3rem;font-size:.88rem}
 <div class="tab-content" id="content-micro"></div>
 <div class="tab-content" id="content-pharma"></div>
 <div class="tab-content" id="content-patho"></div>
+</div>
+<div class="modal-overlay" id="tokenOverlay" style="display:none">
+  <div class="modal" style="max-width:420px">
+    <h3>GitHub Sync Setup</h3>
+    <div class="modal-date">Enter your GitHub Personal Access Token (classic) with <code>gist</code> scope to sync progress across devices.</div>
+    <div style="margin:.8rem 0">
+      <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxx" style="width:100%;padding:.5rem .7rem;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.85rem;background:var(--bg);color:var(--text)">
+    </div>
+    <div style="font-size:.7rem;color:var(--text-dim);margin-bottom:.8rem">Token is stored only in your browser's localStorage. It never leaves your device except to authenticate with GitHub's API directly.</div>
+    <div style="display:flex;gap:.4rem">
+      <button class="modal-btn toggle" id="tokenSave">Connect & Sync</button>
+      <button class="modal-btn close" id="tokenSkip">Skip</button>
+    </div>
+  </div>
 </div>
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modal">
@@ -358,8 +380,77 @@ const pathoSch=extractSubjectSchedule(masterSchedule,'patho');
 
 // ===== STATE =====
 let completed={micro:{},pharma:{},patho:{}};
-try{const s=sessionStorage.getItem('sc4');if(s)completed=JSON.parse(s);}catch(e){}
-function saveState(){try{sessionStorage.setItem('sc4',JSON.stringify(completed));}catch(e){}}
+let GIST_ID=localStorage.getItem('sp_gist_id')||'';
+let GH_TOKEN=localStorage.getItem('sp_gh_token')||'';
+let syncStatus='idle'; // idle, syncing, synced, error
+
+// Load from localStorage as fallback
+try{const s=localStorage.getItem('sc4');if(s)completed=JSON.parse(s);}catch(e){}
+
+function saveLocal(){try{localStorage.setItem('sc4',JSON.stringify(completed));}catch(e){}}
+
+async function gistSave(){
+  if(!GH_TOKEN)return;
+  syncStatus='syncing';updateSyncBadge();
+  try{
+    const body={description:"Study Plan Progress",public:false,files:{"progress.json":{content:JSON.stringify(completed)}}};
+    let url='https://api.github.com/gists';
+    let method='POST';
+    if(GIST_ID){url+=('/'+GIST_ID);method='PATCH';}
+    const r=await fetch(url,{method,headers:{'Authorization':'token '+GH_TOKEN,'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(!r.ok)throw new Error(r.status);
+    const data=await r.json();
+    if(!GIST_ID){GIST_ID=data.id;localStorage.setItem('sp_gist_id',GIST_ID);}
+    syncStatus='synced';
+  }catch(e){console.error('Gist save error:',e);syncStatus='error';}
+  updateSyncBadge();
+}
+
+async function gistLoad(){
+  if(!GH_TOKEN||!GIST_ID)return false;
+  syncStatus='syncing';updateSyncBadge();
+  try{
+    const r=await fetch('https://api.github.com/gists/'+GIST_ID,{headers:{'Authorization':'token '+GH_TOKEN}});
+    if(!r.ok)throw new Error(r.status);
+    const data=await r.json();
+    const content=data.files['progress.json']?.content;
+    if(content){completed=JSON.parse(content);saveLocal();syncStatus='synced';updateSyncBadge();return true;}
+  }catch(e){console.error('Gist load error:',e);syncStatus='error';updateSyncBadge();}
+  return false;
+}
+
+function saveState(){saveLocal();gistSave();}
+
+function updateSyncBadge(){
+  const el=document.getElementById('syncBadge');
+  if(!el)return;
+  const icons={idle:'○',syncing:'↻',synced:'✓',error:'✕'};
+  const colors={idle:'var(--text-dim)',syncing:'var(--pharma)',synced:'var(--micro)',error:'var(--patho)'};
+  const labels={idle:'Not connected',syncing:'Syncing…',synced:'Synced',error:'Sync error'};
+  el.innerHTML=`<span style="color:${colors[syncStatus]}">${icons[syncStatus]} ${labels[syncStatus]}</span>`;
+}
+
+function showTokenPrompt(){
+  const overlay=document.getElementById('tokenOverlay');
+  overlay.style.display='flex';
+  document.getElementById('tokenSave').onclick=async()=>{
+    const t=document.getElementById('tokenInput').value.trim();
+    if(!t)return;
+    GH_TOKEN=t;localStorage.setItem('sp_gh_token',GH_TOKEN);
+    overlay.style.display='none';
+    const loaded=await gistLoad();
+    if(loaded){renderAll();}else{await gistSave();}
+  };
+  document.getElementById('tokenSkip').onclick=()=>{overlay.style.display='none';};
+}
+
+// Init sync
+(async()=>{
+  if(GH_TOKEN){
+    const loaded=await gistLoad();
+    if(loaded)renderAll();
+  }
+})();
 
 const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const MS=['Jan','Feb','Mar','Apr','May'];
@@ -580,6 +671,8 @@ function renderAll(){
   renderSubTab('content-patho',pathoSch,pathoCh,PATHO_TOPICS,'patho','patho-accent','patho-controls');
 }
 renderAll();
+updateSyncBadge();
+if(!GH_TOKEN){setTimeout(()=>showTokenPrompt(),800);}
 </script>
 </body>
 </html>
